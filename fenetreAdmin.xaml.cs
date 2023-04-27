@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,59 +24,95 @@ namespace PPEProjet
         public fenetreAdmin()
         {
             InitializeComponent();
-            string connectionString = "Server=127.0.0.1;Database=bibliotheque;Uid=root;Pwd='';";
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string connectionString = "Server=127.0.0.1;Database=bibliotheque;Uid=admin;Pwd='visualstudio';";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            ObservableCollection<Utilisateurs> listUtilisateurs = new ObservableCollection<Utilisateurs>();
+
+            try
             {
-                try
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM utilisateurs;";
+                MySqlDataReader reader = command.ExecuteReader();
+         
+                while (reader.Read())
                 {
-                    connection.Open();
-                    MySqlCommand command = connection.CreateCommand();
-                    command.CommandText = "SELECT * FROM utilisateurs;";
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
 
-                        while (reader.Read())
-                        {
 
-                            List<Utilisateurs> listUtilisateurs = new List<Utilisateurs>();
-                            Utilisateurs utilisateur = new Utilisateurs(reader["prenom"].ToString(), reader["nom"].ToString(), reader["prenom"].ToString(), reader["prenom"].ToString());
-                            listUtilisateurs.Add(utilisateur);
-                            
-                        }
-                    }
+                    Utilisateurs utilisateur = new Utilisateurs(reader["prenom"].ToString(), reader["nom"].ToString(), reader["mdp"].ToString(), reader["login"].ToString(), int.Parse(reader["id"].ToString()));
+                    listUtilisateurs.Add(utilisateur);
 
-                    
+
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }   
+                listUser.ItemsSource = listUtilisateurs;
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        public class Utilisateurs
+        private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
-            private string prenom;
-            private string nom;
-            private string mdp;
-            private string login;
-
-            public Utilisateurs(string lePrenom, string leNom, string leMdp, string leLogin)
-            {
-                prenom = lePrenom;
-                nom = leNom;
-                mdp = leMdp;
-                login = leLogin;
+            if (listUser.SelectedItem != null)
+            { 
+                Utilisateurs monUser = new Utilisateurs();
+                monUser=(Utilisateurs)listUser.SelectedItem;
+                try
+                {
+                    monUser.Delete();
+                    listUser.Items.Remove((Utilisateurs)listUser.SelectedItem);
+                }
+                catch (Exception ex) { }
             }
+        }
 
-            public string Prenom { get { return prenom; } set { prenom = value; } }
+        private void btn_add_Click(object sender, RoutedEventArgs e)
+        {
+            FormulaireUser formulaireUser = new FormulaireUser(this);
+            formulaireUser.Show();
+        }
 
-            public string Nom { get { return nom; } set { nom = value; } }
+        private void btn_refresh_Click(object sender, RoutedEventArgs e)
+        {
+            string connectionString = "Server=127.0.0.1;Database=bibliotheque;Uid=admin;Pwd='visualstudio';";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            ObservableCollection<Utilisateurs> listUtilisateurs = new ObservableCollection<Utilisateurs>();
 
-            public string Mdp { get { return mdp; } set { mdp = value; } }
+            try
+            {
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM utilisateurs;";
+                MySqlDataReader reader = command.ExecuteReader();
 
-            public string Login { get { return login; } set { login = value; } }
+                while (reader.Read())
+                {
 
+
+                    Utilisateurs utilisateur = new Utilisateurs(reader["prenom"].ToString(), reader["nom"].ToString(), reader["mdp"].ToString(), reader["login"].ToString(), int.Parse(reader["id"].ToString()));
+                    listUtilisateurs.Add(utilisateur);
+
+
+                }
+                listUser.ItemsSource = listUtilisateurs;
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btn_modifier_Click(object sender, RoutedEventArgs e)
+        {
+
+            FormulaireUser formulaireUser = new FormulaireUser(this);
+            formulaireUser.Show();
+            
         }
     }
 }

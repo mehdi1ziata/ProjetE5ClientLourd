@@ -13,7 +13,7 @@
                 </TransformGroup>
             </StackPanel.RenderTransform>
             <Label Content="Connexion" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
-            <Separator/>
+            <Separator Background="#FFA0A0A0"/>
             <Label Content="Identifiant" Foreground="White"/>
             <TextBox x:Name="txtUsername" Background="#545d6a" Foreground="White" FontSize="18"/>
             <Label Content="Mot de passe" Foreground="White"/>
