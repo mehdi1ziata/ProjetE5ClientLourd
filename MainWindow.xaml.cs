@@ -31,7 +31,7 @@ namespace PPEProjet
         {
             string username = txtUsername.Text;
             string password = txtPassword.Password;
-            string connectionString = "Server=127.0.0.1;Database=bibliotheque;Uid=root;Pwd='';";
+            string connectionString = "Server=127.0.0.1;Database=bibliotheque;Uid=admin;Pwd='visualstudio';";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
@@ -53,16 +53,24 @@ namespace PPEProjet
                                 {
                                     fenetreAdmin uneFenetreAdmin = new fenetreAdmin();
                                     uneFenetreAdmin.Show();
+                                    MainWindow mainWindow = new MainWindow();
+                                    mainWindow.Close();
                                     uneFenetreAdmin.textBlockLabelAdmin.Content = uneFenetreAdmin.textBlockLabelAdmin.Content + " " + reader["prenom"];
                                 }
                                 else
                                 {
                                     fenetreOperateur uneFenetreOperateur = new fenetreOperateur();
                                     uneFenetreOperateur.Show();
-                                    uneFenetreOperateur.textBlockLabelOp.Text = uneFenetreOperateur.textBlockLabelOp.Text + " " + reader["prenom"];
+                                    MainWindow mainWindow = new MainWindow();
+                                    mainWindow.Close();
+                                    uneFenetreOperateur.textBlockLabelOp.Content = uneFenetreOperateur.textBlockLabelOp.Content + " " + reader["prenom"];
+                                    reader.Close();
                                 }
-                            }else MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect !");
+                            }
+                            else MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect");
                         }
+                        else if (username != "") MessageBox.Show("Nom d'utilisateur incorrect");
+                        else { MessageBox.Show("Veuillez remplir tout les champs"); }
                     }
                     
                 }

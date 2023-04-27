@@ -1,13 +1,39 @@
 ﻿<Window x:Class="PPEProjet.fenetreOperateur"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PPEProjet"
-        mc:Ignorable="d"
-        Title="fenetreOperateur" Height="450" Width="800">
-    <Grid>
-        <TextBlock x:Name="textBlockLabelOp" TextWrapping="Wrap" Text="Bienvenue Opérateur" Margin="246,27,279,329" FontSize="20"/>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="350" Width="525">
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="344*" />
+            <ColumnDefinition Width="181*"/>
+        </Grid.ColumnDefinitions>
 
+        <StackPanel Grid.Row="0" Margin="20,20,20,20" Grid.ColumnSpan="2">
+            <Label x:Name="textBlockLabelOp" Content="Bienvenue Opérateur" FontSize="24" FontWeight="Bold" Foreground="#333333" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" Background="#FFFFFF" Margin="20,20,20,20" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                <Label Content="Liste des ouvrages" FontWeight="Bold" FontSize="16" Foreground="#333333" />
+            </StackPanel>
+
+            <ListView x:Name="listOuvrage" Grid.Row="1" Margin="10" BorderThickness="1" BorderBrush="#E0E0E0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ISBN" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Titre" DisplayMemberBinding="{Binding Titre}" />
+                        <GridViewColumn Header="Editeur" DisplayMemberBinding="{Binding Editeur}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>
