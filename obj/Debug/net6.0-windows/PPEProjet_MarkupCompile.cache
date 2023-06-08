@@ -10,11 +10,19 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\mehdi\source\repos\PPEProjet\App.xaml
+<<<<<<< HEAD
 5-421234774
 
 10-61454309
 2001276325477
 fenetreAdmin.xaml;fenetreOperateur.xaml;FenetreOuvrage.xaml;FormulaireUser.xaml;MainWindow.xaml;
+=======
+4-876792016
+
+9-1407362248
+2001276325477
+fenetreAdmin.xaml;fenetreOperateur.xaml;FormulaireUser.xaml;MainWindow.xaml;
+>>>>>>> 15714af6bc95c53435c4ca986181024d3a4629fd
 
 False
 
